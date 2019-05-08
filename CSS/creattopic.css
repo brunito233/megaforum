@@ -1,0 +1,58 @@
+		.posttopic {
+		    background-color: #535a6c;
+		    margin: 15px 60px;
+		    line-height: 56px;
+		    padding: 0px 35px;
+		    margin-right: 310px;
+		    width: 85%;
+		}
+		
+		#desc {
+			border-radius: 2px;
+		    box-shadow: none;
+		    border: none;
+		    background-color: #f1f1f1;
+		    padding: 10px;
+		    font-size: 14px;
+		    color: #989c9e;
+		    font-family: 'Open Sans Light', sans-serif;
+		    margin-bottom: 20px;
+		    height: 150px;
+		    resize: none;
+		}
+
+		#select {
+			border-radius: 2px;
+		    box-shadow: none;
+		    border: solid 1px #cfd5d7;
+		    background-color: #ffffff;
+		    font-size: 14px;
+		    color: #989c9e;
+		    font-family: 'Open Sans Light', sans-serif;
+		    margin-bottom: 20px;
+		    height: 50px;
+		    width: 45%;
+		}
+
+			.control-btn {
+		    background-color: #535a6c;
+		    margin: 15px 60px;
+		    line-height: 56px;
+		    padding: 5px 35px;
+		    margin-right: 310px;
+		    width: 85%; 
+			}
+
+			.control-btn input {
+				font-family: 'Roboto', sans-serif;
+			    font-size: 14px;
+			    margin: 0 10px;
+			    padding: 10px 0;
+			    min-width: 120px;
+			    border-radius: 0;
+			    color: #fff;
+			    background-color: #293a4a;
+			    text-transform: uppercase;
+			    border: none;
+			    cursor: pointer;
+			}

@@ -1,0 +1,235 @@
+		.topic-list--content {
+    		overflow: hidden;
+    		border: 1px solid grey;
+    		margin: 10px 55px;
+		}
+
+		.topic--post {
+		    margin: -2px 0 0;
+		    padding: 15px 20px 0;
+		}
+
+		.post {
+		    padding: 5px 10px;
+		    margin-bottom: 4px;
+		    background-repeat: no-repeat;
+		    border-radius: 7px;
+		}
+
+		.postprofile {
+		    color: #666666;
+		    border-color: #FFFFFF;
+		}
+
+		.postprofile {
+		    margin: -25px 0 0px 0;
+		    min-height: 80px;
+		    border: 1px solid transparent;
+		    border-width: 0 0 0 1px;
+		    width: 22%;
+		    float: right;
+		    display: inline;
+		}
+
+		dl {
+		    margin-top: 0;
+		    margin-bottom: 20px;
+		}
+
+		.postprofile dt {
+		    line-height: 1.2em;
+		    margin-left: 8px;
+		}
+
+		dt {
+		    font-size: 14px;
+		    font-weight: 400;
+		}
+
+		dt {
+		    font-weight: 700;
+		}
+
+		dd, dt {
+		    line-height: 1.42857143;
+		}
+
+		.postprofile dd {
+		    overflow: hidden;
+		    text-overflow: ellipsis;
+		}
+
+		@media (min-width: 850px)
+		.postbody {
+		    width: 76%;
+		}
+
+		@media (min-width: 700px)
+		.postbody {
+		    width: 70%;
+		}
+
+		.postbody {
+		    color: #333333;
+		}
+
+		.postbody {
+		    padding: 0;
+		    line-height: 1.48em;
+		    width: 76%;
+		    float: left;
+		}
+
+		.has-profile .postbody h3 {
+		    font-size: 20px;
+		    line-height: 28px;
+		}
+
+		.has-profile .postbody h3 {
+		    float: none !important;
+		    margin-right: 180px;
+		}
+
+		.postbody h3.first {
+		    font-size: 1.7em;
+		}
+
+		.postbody h3 {
+		    font-size: 20px;
+		    line-height: 28px;
+		}
+
+		.postbody h3 {
+		    float: left;
+		    font-size: 1.5em;
+		    padding: 2px 0 0 0;
+		    margin-top: 0 !important;
+		    margin-bottom: 0.3em !important;
+		    text-transform: none;
+		    border: none;
+		    font-family: "Trebuchet MS", Verdana, Helvetica, Arial, sans-serif;
+		    line-height: 125%;
+		}
+
+		.has-profile .postbody h3 a {
+		    color: #222;
+		    -webkit-transition: color .25s ease;
+		    transition: color .25s ease;
+		}
+		.postbody a {
+		    color: #303030;
+		    text-decoration: none;
+		}
+
+		.postbody p.author {
+		    padding-bottom: 15px;
+		    border-bottom: 1px solid #e9e9e9;
+		    font-size: 12px;
+		    line-height: 16px;
+		}
+
+		p.author {
+		    margin-bottom: 0.6em;
+		    padding: 0 0 5px 0;
+		    font-family: Verdana, Helvetica, Arial, sans-serif;
+		    font-size: 1em;
+		    line-height: 1.2em;
+		    clear: both;
+		}
+
+		p {
+		    font-size: 14px;
+		    line-height: 18px;
+		}
+
+		p {
+		    margin: 0 0 10px;
+		}
+
+		.postprofile strong {
+		    color: #000000;
+		}
+
+		.postbody a.username-coloured {
+		    color: #222 !important;
+		    -webkit-transition: color .25s ease;
+		    transition: color .25s ease;
+		}
+
+		.postbody .content {
+		    font-size: 14px;
+		    font-weight: 300;
+		    line-height: 20px;
+		}
+
+		.postbody .content {
+		    overflow-x: auto;
+		}
+
+		.content, .content p {
+		    font-family: 'Roboto', sans-serif;
+		    font-size: 14px;
+		    line-height: 18px;
+		}
+
+		.content {
+		    color: #333333;
+		}
+
+		.content {
+		    clear: both;
+		    min-height: 3em;
+		    overflow: hidden;
+		    line-height: 1.4em;
+		    font-family: "Lucida Grande", "Trebuchet MS", Verdana, Helvetica, Arial, sans-serif;
+		    font-size: 1em;
+		    padding-bottom: 1px;
+		}
+
+		.topic-list--content ul {
+		    margin: 0;
+		    padding: 0;
+		    list-style: none;
+		}
+
+		.topic-list--content > ul > li:last-child {
+		    margin-bottom: 0;
+		}
+
+		.topic-list--content > ul > li {
+		    margin: 10px 0;
+		    padding-top: 2px;
+		    padding-bottom: 14px;
+		    border-style: solid;
+		    border-width: 0 0 1px;
+		    border-color: #e9e9e9;
+		    background-color: #fff;
+		    overflow: hidden;
+		}
+
+		.topic-list-header--title {
+		    padding: 15px 10px;
+		    color: #fff;
+		    font-size: 16px;
+		    font-weight: 700;
+		    line-height: 20px;
+		    text-transform: uppercase;
+		    -webkit-transition: opacity .25s ease;
+		    transition: opacity .25s ease;
+		    overflow: hidden;
+		    text-overflow: ellipsis;
+		}
+
+		.btn_comentar {
+			padding: 20px 50px;
+		    border-radius: 0;
+		    color: #fff;
+		    background-color: #293a4a;
+		    text-transform: uppercase;
+		    transition: background-color .25s ease-in-out;
+		    border: none;
+		    cursor: pointer;
+		    outline: none;
+		    float: right;
+		    margin-top: 10px;
+		}
