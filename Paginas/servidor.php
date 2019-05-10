@@ -29,6 +29,37 @@
 	}
 	/*Login*/
 
+	/* Registro*/
+		if(isset($_POST['btn_register'])){
+				$username = mysqli_real_escape_string($bd, $_POST['username']);
+				$email = mysqli_real_escape_string($bd, $_POST['email_register']);
+				$password = mysqli_real_escape_string($bd, $_POST['password']);
+					$sql = "SELECT * FROM utilizadores WHERE email = '$email'";
+					$query = mysqli_query($bd, $sql);
+					$cont = mysqli_num_rows($query);
+					if($cont > 0) {
+							$_SESSION['ver_email'] = "Email ja existente";
+						
+						}else{
+						$foto = "default.png";
+						$foto_capa = "default_capa.jpg";
+						$activo = 1;
+						$sql = "INSERT INTO utilizadores (nome_utilizador,email,password,foto,data_registo,activo,foto_capa) VALUES ('$username','$email','$password','$foto',CURDATE(),'$activo','$foto_capa')";
+						$query = mysqli_query($bd, $sql);
+						$_SESSION['username'] = $username;
+						$_SESSION['email'] = $email;
+						$_SESSION['foto'] = $foto;
+						$_SESSION['foto_capa'] = $foto_capa;
+						$sql = "SELECT * FROM utilizadores WHERE email = '$email' AND password = '$password'";
+						$query = mysqli_query($bd, $sql);
+						$res = mysqli_fetch_assoc($query);
+						$_SESSION['id_utilizador'] = $res['id_utilizador'];
+						$_SESSION['password'] = $res['password'];
+						header('location: index.php?page=home');	
+}
+}
+	/* Registro*/
+
 
 	/*Terminar Sessão*/
 		if(isset($_GET['logout'])) {

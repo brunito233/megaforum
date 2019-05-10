@@ -1,5 +1,5 @@
 <div class="container-register">
-	<form>
+	<form method="POST">
 		<table>
 				<tr>
 					<td>Username:</td>
@@ -7,7 +7,7 @@
 				</tr>	
 				<tr>
 					<td>Email:</td>
-					<td><input type="text" name="email" id="email_user" onclick="remove()"> <i class="fas fa-times" id="x_2"></i></td>
+					<td><input type="text" name="email_register" id="email_user" onclick="remove()"> <i class="fas fa-times" id="x_2"></i></td>
 				</tr>
 				<tr>
 					<td>Palavra-Passe:</td>
