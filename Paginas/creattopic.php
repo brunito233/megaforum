@@ -64,7 +64,6 @@
 				<table>
 					<tr>
 						<td><input type="submit" name="btn_criar" value="Criar Topico"></td>
-						<td><input type="submit" name="btn_cancelar" value="Cancelar"></td>
 					</tr>
 				</table>
 			</center>	

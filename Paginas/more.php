@@ -75,6 +75,38 @@
 						<dd class="profile-joined">
 							<strong>Joined:</strong>
 							<?php echo $res_user['data_registo'];?>
+							<?php if($_SESSION['username'] == $user) {?>
+						<dd><button name="btn_delete" onclick="doSomething()">Eliminar</button></dd>	
+						<form method="POST">
+							<div id="id_confrmdiv">
+								<p>Tem a certeza que quer eliminar o seu topico?</p>
+									<button id="id_truebtn" name="sim">Sim</button>
+									<button id="id_falsebtn">Não</button>
+							</div>
+						</form>	
+						<?php
+							if(isset($_POST['sim'])) {
+								$sql_delete_respostas = "DELETE FROM respostas WHERE id_topico = '$id'";
+								$query_delete = mysqli_query($bd, $sql_delete_respostas); 
+								$sql_delete = "DELETE FROM topicos WHERE id_topico = '$id'";
+								$query_delete = mysqli_query($bd, $sql_delete);
+								$sql_delete_assunto = "DELETE FROM assunto WHERE id_assunto = '$id_assunto'";
+								$query_delete = mysqli_query($bd, $sql_delete_assunto);
+								$sql_delete_titulo = "DELETE FROM titulo WHERE id_titulo = '$id_titulo'";
+								$query_delete = mysqli_query($bd, $sql_delete_titulo);
+								echo '<script type="text/javascript">
+          						window.location = "../index.php"
+      							</script>';
+							}  
+						?>
+				<script>
+					function doSomething(){
+						document.getElementById('id_confrmdiv').style.display="block"; //this is the replace of this line
+					}
+				</script>
+					<?php }else {
+			
+					}?>
 
 						</dd>
 					</dl>
@@ -113,7 +145,7 @@
 		$foto = $res_username['foto'];
 	}while ($res_username = mysqli_fetch_assoc($query_username));
 		if($contagem > 0 ) { $id_resposta = $res['id_respostas'];?>
-
+<form method="POST">
  	<div class="topic-list--content">
 		<ul>
 			<li>
@@ -124,7 +156,23 @@
 							<strong>Joined:</strong>
 							<?php echo $res_user['data_registo'];?>
 						</dd>
-					</dl>
+							<?php if($_SESSION['username'] == $username) {?>
+									<dd>
+										<button class="btns" name="<?php echo $id_resposta;?>btn_delete_respostas">Eliminar</button>
+									</dd>	
+								<?php 
+									if(isset($_POST[$id_resposta.'btn_delete_respostas'])) {
+										$sql_resposta = "DELETE FROM respostas WHERE id_respostas = '$id_resposta'";
+					  					$query_resposta_delete = mysqli_query($bd, $sql_resposta);
+					  					echo("<meta http-equiv='refresh' content='0'>");
+									}
+								?>
+									</form>
+							<?php 
+									}else {
+									}
+								?>
+							</dl>
 					<div class="postbody">
 						<div id="post_content1" style="padding: 0px 30px;">
 							<h3 class="first"><a href="#"></a></h3>
@@ -135,15 +183,18 @@
 				</div>
 			</li>
 		</ul>
-		 <?php if($res_username['type'] == 1){?>
+
+		 <?php 
+		  if($res_username['type'] == 1){?>
 		<a href="" style="float: right;">Eliminar</a>
 	<?php }else { ?>
 	</div>
 		
-<?php 
+<?php
 }
-		} 
+		}
 	}while($res = mysqli_fetch_assoc($query));
+
 ?>
 <p id='msg'></p>
 
@@ -167,6 +218,6 @@
 	if(isset($_SESSION['username'])){?> 
 	<form method="post" style="margin: 10px 55px;">
     	<textarea id="mytextarea" style="resize: none;"></textarea>
-    	<button name="btn_comentar" class="btn_comentar"  onclick="return comentarios(window.location.reload());">Comentar</button>
+    	<button name="btn_comentar" class="btn_comentar" onclick="return comentarios(window.location.reload());">Comentar</button>
   	</form>
-  <?php }?>
+  <?php } ?>

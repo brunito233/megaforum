@@ -55,7 +55,6 @@
 
 		$sql = "INSERT INTO topicos (id_categoria,id_titulo,id_utilizador,id_assunto) VALUES ('$categoria','$id_titulo','$id_utilizador','$id_assunto')";
 		$result = mysqli_query($bd,$sql);
-		echo $sql;
-				/*Criar Topico*/
+	/*Criar Topico*/
 	}
 ?>	

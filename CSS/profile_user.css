@@ -40,3 +40,14 @@
 		    outline: none;
 		    cursor: pointer;
 		}
+
+
+		.btns_alterar {
+			background: #3b87f9;
+		    padding: 15px 20px;
+		    border: none;
+		    border-radius: 5px;
+		    color: white;
+		    cursor: pointer;
+		    outline: none;
+		}

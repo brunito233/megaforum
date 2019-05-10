@@ -11,7 +11,7 @@
     <ul class="header-login-menu">
        <?php if(isset($_SESSION['username'])){?>
       <a href="Paginas/creattopic.php"><i class="fas fa-plus"></i></a>
-      <a href="Paginas/definicoes.php" onclick="alert('Em Construção')"><i class="fas fa-cog"></i></a>
+      <a href="Paginas/perfil_user.php?<?php echo $_SESSION['id_utilizador'];?>"><i class="fas fa-cog"></i></a>
       <?php 
           $id_utilizador = $_SESSION['id_utilizador'];
           $sql = "SELECT * FROM utilizadores WHERE id_utilizador = '$id_utilizador'"; 
