@@ -18,7 +18,7 @@
           $query = mysqli_query($bd,$sql);
           $res = mysqli_fetch_assoc($query);
           if($res['type'] == 1){?>
-      <a href="#" onclick="alert('Em Construção')"><i class="fas fa-users-cog"></i></a>
+      <a href="Paginas/admin.php"><i class="fas fa-users-cog"></i></a>
         <?php }?>
       <a href="Paginas/perfil_user.php?<?php echo $_SESSION['id_utilizador'];?>"><?php echo utf8_encode($_SESSION['username']);?></a>
       <a href="index.php?logout=1"><i class="fas fa-sign-out-alt"></i></a>

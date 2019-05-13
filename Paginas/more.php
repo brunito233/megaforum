@@ -75,6 +75,7 @@
 						<dd class="profile-joined">
 							<strong>Joined:</strong>
 							<?php echo $res_user['data_registo'];?>
+						<dd>
 							<?php if($_SESSION['username'] == $user) {?>
 						<dd><button name="btn_delete" onclick="doSomething()">Eliminar</button></dd>	
 						<form method="POST">
@@ -104,8 +105,10 @@
 						document.getElementById('id_confrmdiv').style.display="block"; //this is the replace of this line
 					}
 				</script>
-					<?php }else {
-			
+					<?php 
+
+				}else {
+					
 					}?>
 
 						</dd>
@@ -156,7 +159,7 @@
 							<strong>Joined:</strong>
 							<?php echo $res_user['data_registo'];?>
 						</dd>
-							<?php if($_SESSION['username'] == $username) {?>
+							<?php if(isset($_SESSION['username']) == $username) {?>
 									<dd>
 										<button class="btns" name="<?php echo $id_resposta;?>btn_delete_respostas">Eliminar</button>
 									</dd>	
