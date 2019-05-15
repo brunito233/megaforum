@@ -11,7 +11,7 @@
     <ul class="header-login-menu">
        <?php if(isset($_SESSION['username'])){?>
       <a href="Paginas/creattopic.php"><i class="fas fa-plus"></i></a>
-      <a href="Paginas/perfil_user.php?<?php echo $_SESSION['id_utilizador'];?>"><i class="fas fa-cog"></i></a>
+      <a href="Paginas/definicoes.php?<?php echo $_SESSION['id_utilizador'];?>"><i class="fas fa-cog"></i></a>
       <?php 
           $id_utilizador = $_SESSION['id_utilizador'];
           $sql = "SELECT * FROM utilizadores WHERE id_utilizador = '$id_utilizador'"; 
@@ -40,6 +40,7 @@
           <form method="POST">
             <input type="text" name="email" id="email" placeholder="Email" class="form-control" onclick="remove()">
             <input type="password" name="pass" id="passe" placeholder="Palavra-Passe" class="form-control" onclick="remove()">
+            
             <input type="submit" name="btn_login" value="Login" class="submit-btn" onclick="return(valida_form())">
           </form>
         </div>

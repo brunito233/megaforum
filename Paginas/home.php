@@ -44,6 +44,14 @@
 				$query_cat = mysqli_query($bd, $sql_cat);
 				$res_cat = mysqli_fetch_assoc($query_cat);
 				
+				/*Buscar nlikes*/
+				$result = mysqli_query($bd, "SELECT COUNT(id_like) AS id_like FROM likes
+				WHERE id_topico = '$id_topico'");
+				$row = mysqli_fetch_array($result);
+				$count_nlikes = $row['id_like'];
+				/*Buscar nlikes*/
+
+
 				if($res['mostrar'] == 0 ) {
 			?>
 			<div class="topicos_content">
@@ -55,8 +63,8 @@
 					<p class="post-by">by<a href="Paginas/perfil_user.php?<?php echo $user;?>"> <?php echo $res_user['nome_utilizador'];?> </a> <i class="fa fa-angle-double-right"></i> <?php echo utf8_encode($res_cat['categoria']);?></p>
 				</div>
 				<div class="topico_stats">
-					<p><strong><?php echo $count_respostas;?></strong> Respostas</p>
-					<p><strong>0</strong> Visiualizações</p>
+					<p><strong><?php echo $count_respostas;?></strong> <i class="fas fa-comment-dots"></i></p>
+					<p><strong><?php echo $count_nlikes; ?></strong> <i class="fas fa-thumbs-up"></i></p>
 				</div>
 			</div>
 		<?php

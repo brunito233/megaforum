@@ -14,14 +14,14 @@
     <ul class="header-login-menu">
        <?php if(isset($_SESSION['username'])){?>
       <a href="../Paginas/creattopic.php"><i class="fas fa-plus"></i></a>
-      <a href="../Paginas/perfil_user.php?<?php echo $_SESSION['id_utilizador'];?>"><i class="fas fa-cog"></i></a>
+      <a href="../Paginas/definicoes.php?<?php echo $_SESSION['id_utilizador'];?>"><i class="fas fa-cog"></i></a>
       <?php 
           $id_utilizador = $_SESSION['id_utilizador'];
           $sql = "SELECT * FROM utilizadores WHERE id_utilizador = '$id_utilizador'"; 
           $query = mysqli_query($bd,$sql);
           $res = mysqli_fetch_assoc($query);
           if($res['type'] == 1){?>
-      <a href="#"><i class="fas fa-users-cog"></i></a>
+      <a href="../Paginas/admin.php"><i class="fas fa-users-cog"></i></a>
         <?php }?>
       <a href="../Paginas/perfil_user.php?<?php echo $_SESSION['id_utilizador'];?>"><?php echo utf8_encode($_SESSION['username']);?></a>
       <a href="../index.php?logout=1"><i class="fas fa-sign-out-alt"></i></a>

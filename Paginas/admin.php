@@ -25,6 +25,7 @@
 		        	<?php } while($res = mysqli_fetch_assoc($query));?>
 		        </optgroup>
 		    </select>
+            <a>Motivo:</a>
 	        <select id="select" name="bans">
 	            <optgroup label="Motivo de Ban">
 	                <option>Topico com conteudo não aceitavel</option>

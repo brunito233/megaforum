@@ -44,19 +44,21 @@
 		$categoria = $res_cat['categoria'];
 
 		$user = $res['id_utilizador'];
+		$assunto = $res_assunto['assunto'];
+		$id_username_go = $res['id_utilizador'];
+
 		$sql_user = "SELECT * FROM utilizadores WHERE id_utilizador ='$user'";
 		$query_user = mysqli_query($bd, $sql_user);
 		$res_user = mysqli_fetch_assoc($query_user);
 		$img_user = $res_user['foto'];
-		$user = $res_user['nome_utilizador'];
-		$assunto = $res_assunto['assunto'];
-		$id_username_go = $res['id_utilizador'];
+		$user_topico = $res_user['nome_utilizador'];
+		$user_id = $res_user['id_utilizador'];
 		$data_registo = $res_user['data_registo'];
 		$rank = $res_user['type'];
 		if($rank == 1) {
 			$rank = "Administrador";	
 		}else {
-			$rank = "<strong>Utilizador</strong>";
+			$rank = "Utilizador";
 		}
 ?>
 
@@ -69,48 +71,84 @@
 					<dl class="postprofile">
 						<dt class="has-profile-rank no-avatar">
 							<div class="avatar-container"></div>
-							<a href="#">Bruno Santos</a>
+							<br>
 						</dt>
 						<dd class="profile-rank"><?php echo $rank;?></dd>
 						<dd class="profile-joined">
 							<strong>Joined:</strong>
 							<?php echo $res_user['data_registo'];?>
+						</dd>
+						<?php 
+							if(isset($_SESSION['username'])){?>
+						<dd><form method="POST"><button name="btn_like" style="display: none;" class="btn_like"><i class="fas fa-thumbs-up"></i></button></form></dd>	
+						
+						<?php
+							$sql_ver_like = "SELECT * FROM likes WHERE id_topico = '$id' AND id_utilizador = '$id_utilizador'";
+							$query_ver_like = mysqli_query($bd, $sql_ver_like);
+							$cont_ver_like = mysqli_num_rows($query_ver_like);
+							if($cont_ver_like > 0) {?>
+									<dd><form method="POST"><button name="btn_like" style="background-color: #256267;" class="btn_like"><i class="fas fa-thumbs-up"></i></button></form></dd>	
+								<?php 
+							}else{?>
+
+							<dd>
+								<form method="POST">
+									<button name="btn_like" class="btn_like"><i class="fas fa-thumbs-up"></i></button>
+								</form>
+
+							<?php 
+							if(isset($_POST['btn_like'])) {
+								/*ID Topico,ID Utilizador*/
+								echo $id;
+								echo $id_utilizador;
+
+								$sql_like = "INSERT INTO likes (id_topico,id_utilizador) VALUES ('$id','$id_utilizador')";
+								$query_like = mysqli_query($bd, $sql_like);
+								echo "(<meta http-equiv='refresh' content='0'>)";
+
+							}
+						}
+						?>
 						<dd>
-							<?php if($_SESSION['username'] == $user) {?>
-						<dd><button name="btn_delete" onclick="doSomething()">Eliminar</button></dd>	
+							<?php 
+								/*echo $id;  Id Topico
+								echo $user_topico; Nome do User do topico
+								echo $user_id;  Id do utilizador do topico*/
+								if($_SESSION['username'] == $user_topico){
+							?>
+							<button class="btn_delete" name="btn_delete" onclick="doSomething()"><i class="fas fa-trash"></i></button>
+						</dd>
 						<form method="POST">
 							<div id="id_confrmdiv">
 								<p>Tem a certeza que quer eliminar o seu topico?</p>
 									<button id="id_truebtn" name="sim">Sim</button>
 									<button id="id_falsebtn">Não</button>
 							</div>
-						</form>	
-						<?php
-							if(isset($_POST['sim'])) {
-								$sql_delete_respostas = "DELETE FROM respostas WHERE id_topico = '$id'";
-								$query_delete = mysqli_query($bd, $sql_delete_respostas); 
-								$sql_delete = "DELETE FROM topicos WHERE id_topico = '$id'";
-								$query_delete = mysqli_query($bd, $sql_delete);
-								$sql_delete_assunto = "DELETE FROM assunto WHERE id_assunto = '$id_assunto'";
-								$query_delete = mysqli_query($bd, $sql_delete_assunto);
-								$sql_delete_titulo = "DELETE FROM titulo WHERE id_titulo = '$id_titulo'";
-								$query_delete = mysqli_query($bd, $sql_delete_titulo);
-								echo '<script type="text/javascript">
-          						window.location = "../index.php"
-      							</script>';
-							}  
-						?>
-				<script>
-					function doSomething(){
-						document.getElementById('id_confrmdiv').style.display="block"; //this is the replace of this line
+							<?php
+								if(isset($_POST['sim'])) {
+									$sql_delete_respostas = "DELETE FROM respostas WHERE id_topico = '$id'";
+									$query_delete = mysqli_query($bd, $sql_delete_respostas); 
+									$sql_delete = "DELETE FROM topicos WHERE id_topico = '$id'";
+									$query_delete = mysqli_query($bd, $sql_delete);
+									$sql_delete_assunto = "DELETE FROM assunto WHERE id_assunto = '$id_assunto'";
+									$query_delete = mysqli_query($bd, $sql_delete_assunto);
+									$sql_delete_titulo = "DELETE FROM titulo WHERE id_titulo = '$id_titulo'";
+									$query_delete = mysqli_query($bd, $sql_delete_titulo);
+									echo '<script type="text/javascript">
+	          						window.location = "../index.php"
+	      							</script>';
+								} 
+						}
+					}else {
+						
 					}
-				</script>
-					<?php 
-
-				}else {
-					
-					}?>
-
+						?>
+						</form>	
+						<script>
+							function doSomething(){
+								document.getElementById('id_confrmdiv').style.display="block"; //this is the replace of this line
+							}
+						</script>
 						</dd>
 					</dl>
 					<div class="postbody">
@@ -139,11 +177,12 @@
 		$res_username = mysqli_fetch_assoc($query_username);
 		$rank = $res_username['type'];
 		if($rank == 1) {
-			$rank = "<strong style='color: red;'>Administrador</strong>";	
+			$rank = "Administrador";	
 		}else {
-			$rank = "<strong>Utilizador</strong>";
+			$rank = "Utilizador";
 		}
 	do {
+
 		$username = $res_username['nome_utilizador'];
 		$foto = $res_username['foto'];
 	}while ($res_username = mysqli_fetch_assoc($query_username));
@@ -159,23 +198,21 @@
 							<strong>Joined:</strong>
 							<?php echo $res_user['data_registo'];?>
 						</dd>
-							<?php if(isset($_SESSION['username']) == $username) {?>
-									<dd>
-										<button class="btns" name="<?php echo $id_resposta;?>btn_delete_respostas">Eliminar</button>
-									</dd>	
-								<?php 
-									if(isset($_POST[$id_resposta.'btn_delete_respostas'])) {
-										$sql_resposta = "DELETE FROM respostas WHERE id_respostas = '$id_resposta'";
-					  					$query_resposta_delete = mysqli_query($bd, $sql_resposta);
-					  					echo("<meta http-equiv='refresh' content='0'>");
-									}
-								?>
-									</form>
-							<?php 
-									}else {
-									}
-								?>
-							</dl>
+						<dd>
+							<?php if($_SESSION['id_utilizador'] == $id_username){?>
+							<button class="btns" name="<?php echo $id_resposta;?>btn_delete_respostas"><i class="fas fa-trash"></i></button>
+							<?php }else {?>
+						</dd>	
+							<?php } ?>
+						<?php 
+							if(isset($_POST[$id_resposta.'btn_delete_respostas'])) {
+								$sql_resposta = "DELETE FROM respostas WHERE id_respostas = '$id_resposta'";
+					  			$query_resposta_delete = mysqli_query($bd, $sql_resposta);
+					  			echo("<meta http-equiv='refresh' content='0'>");
+							}
+						?>
+</form>
+					</dl>
 					<div class="postbody">
 						<div id="post_content1" style="padding: 0px 30px;">
 							<h3 class="first"><a href="#"></a></h3>
@@ -224,3 +261,5 @@
     	<button name="btn_comentar" class="btn_comentar" onclick="return comentarios(window.location.reload());">Comentar</button>
   	</form>
   <?php } ?>
+
+  

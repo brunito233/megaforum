@@ -25,7 +25,11 @@
 					$_SESSION['foto'] = $res['foto'];
 				}while ($res = mysqli_fetch_assoc($result));
 				header('location: index.php?page=home');
-	}
+		}else {
+			echo '<script language="javascript">';
+			echo 'alert("Dados Incorretos!")';
+			echo '</script>';
+		}
 	}
 	/*Login*/
 
