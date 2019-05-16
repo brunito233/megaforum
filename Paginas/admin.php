@@ -1,30 +1,31 @@
 <?php
-	session_start();
-	include 'header2.php';
-	include 'servidor.php';
+    session_start();
+    if(isset($_SESSION['username'])){
+        include 'header2.php';
+        include 'servidor.php';    
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>Adms</title>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 </head>
 <body>
 	<h3>Banir Uilizador</h3>
-	<div>
-		<form method="POST">
-			<a>Nome:</a>
-			<select id="select" name="utilizadores">
-		       	<optgroup label="Utilizadores">
-		        <?php
-		          	$sql = "SELECT * FROM utilizadores WHERE activo = '1' AND type = '0'";
-		            $query = mysqli_query($bd, $sql);
-		            $res = mysqli_fetch_assoc($query);
-		            do {?>
-		        	<option name="<?php echo $res['nome_utilizador'];?>"><?php echo utf8_encode($res['nome_utilizador']);?></option>
-		        	<?php } while($res = mysqli_fetch_assoc($query));?>
-		        </optgroup>
-		    </select>
+	   <div>
+		  <form method="POST">
+		  	   <a>Nome:</a>
+                <select id="select" name="utilizadores">
+    		       	<optgroup label="Utilizadores">
+    		        <?php
+    		          	$sql = "SELECT * FROM utilizadores WHERE activo = '1' AND type = '0'";
+    		            $query = mysqli_query($bd, $sql);
+    		            $res = mysqli_fetch_assoc($query);
+    		            do {?>
+    		        	<option name="<?php echo $res['nome_utilizador'];?>"><?php echo utf8_encode($res['nome_utilizador']);?></option>
+    		        	<?php } while($res = mysqli_fetch_assoc($query));?>
+    		        </optgroup>
+		      </select>
             <a>Motivo:</a>
 	        <select id="select" name="bans">
 	            <optgroup label="Motivo de Ban">
@@ -198,7 +199,11 @@ $bd = mysqli_connect('localhost', 'root', '', 'pap2018');
     			}while($res = mysqli_fetch_assoc($query));
 ?>
   </tr>
-
 </table>
+<?php 
+}else {
+    header('Location: ../index.php');
+}
+?>
 </body>
 </html>

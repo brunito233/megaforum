@@ -31,6 +31,7 @@
 						}
 					?>
 					<dt><span>Rank: <strong><?php echo $rank;?></strong></span></dt>
+					<dt><span>Sexo: <strong><?php echo $perfil_user['sexo']; ?></strong></span>
 					<dt><span>Bio: <strong><?php echo $perfil_user['bio'];?></strong></span></dt>
 					<dt><span>Especialidade: <strong><?php echo $perfil_user['especialidade']?></strong></span></dt>
 				</dl>

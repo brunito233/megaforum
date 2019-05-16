@@ -2,6 +2,7 @@
   include 'servidor.php';
 ?>
 <link rel="stylesheet" type="text/css" href="../CSS/header.css">
+<link rel="stylesheet" type="text/css" href="../CSS/footer-basic-centered.css">
 <div class="header">
   <!-- Header do Forum -->
     <h2 class="logo"><a href="../index.php">Mega Forum</a></h2>
@@ -122,5 +123,4 @@
       }
     }
     </script>
-
   </div>

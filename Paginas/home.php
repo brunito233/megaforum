@@ -60,7 +60,7 @@
 				</div>
 				<div class="topico_title">
 					<h2><a href="Paginas/more.php?id=<?php echo $id_topico; ?>"><?php echo utf8_encode($res_id['titulo']);?></a></h2>
-					<p class="post-by">by<a href="Paginas/perfil_user.php?<?php echo $user;?>"> <?php echo $res_user['nome_utilizador'];?> </a> <i class="fa fa-angle-double-right"></i> <?php echo utf8_encode($res_cat['categoria']);?></p>
+					<p class="post-by">by<a href="Paginas/perfil_user.php?<?php echo $user;?>"> <?php echo $res_user['nome_utilizador'];?> </a> <i class="fa fa-angle-double-right"></i> <?php echo utf8_encode($res_cat['categoria']);?> <i class="fa fa-angle-double-right"></i></p>
 				</div>
 				<div class="topico_stats">
 					<p><strong><?php echo $count_respostas;?></strong> <i class="fas fa-comment-dots"></i></p>
@@ -70,4 +70,4 @@
 		<?php
 		}
 			}while($res = mysqli_fetch_assoc($query));
-?>
+		?>

@@ -1,12 +1,13 @@
 <?php
 	session_start();
-	include 'servidor.php';
-	include 'header2.php';
-	$url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-	$id = substr($url, strrpos($url, '?') + 1);
-	$sql = "SELECT * FROM utilizadores WHERE id_utilizador = '$id'";
-	$query = mysqli_query($bd, $sql);
-	$perfil_user = mysqli_fetch_assoc($query);
+    if(isset($_SESSION['username'])){
+	   include 'servidor.php';
+	   include 'header2.php';
+  	 $url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+  	 $id = substr($url, strrpos($url, '?') + 1);
+  	 $sql = "SELECT * FROM utilizadores WHERE id_utilizador = '$id'";
+  	 $query = mysqli_query($bd, $sql);
+  	 $perfil_user = mysqli_fetch_assoc($query);     
 ?>
 <!DOCTYPE html>
 <html>
@@ -399,5 +400,10 @@ function openCity(evt, cityName) {
 // Get the element with id="defaultOpen" and click on it
 document.getElementById("defaultOpen").click();
 </script>
+<?php 
+  }else {
+    header('location: ../index.php');
+  }
+?>
 </body>
 </html>

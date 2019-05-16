@@ -14,20 +14,19 @@
 	<link rel="stylesheet" type="text/css" href="CSS/register.css">
 </head>
 <body>
-	<?php 
-	
+	<?php
 		include('Paginas/servidor.php');
 
 		include('Paginas/header.php');
-
-		//include('Paginas/funcoes.php');
 
 			if(!isset($_GET['page'])) {
 				include('Paginas/home.php');
 			}else{
 				$page = $_GET['page'];
 				include("Paginas/$page.php");
-		}
+			}
+		
+		include('Paginas/footer.php');
 	?>
 </body>
 </html>
