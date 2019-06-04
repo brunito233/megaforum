@@ -1,4 +1,4 @@
-<?php 
+<?php
 	/*Ligação a base de dados*/
 	$bd = mysqli_connect ('localhost','root', '' , 'pap2018');
 	/*Ligação a base de dados*/
@@ -7,8 +7,8 @@
 
 	/*Login*/
 	if(isset($_POST['btn_login'])){
-		$email = mysqli_real_escape_string($bd , $_POST['email']); 
-		$password = mysqli_real_escape_string($bd , $_POST['pass']); 
+		$email = mysqli_real_escape_string($bd , $_POST['email']);
+		$password = mysqli_real_escape_string($bd , $_POST['pass']);
 		$sql = "SELECT * FROM utilizadores WHERE email = '$email' AND password = '$password'";
 		$result = mysqli_query($bd,$sql);
 			$cont = mysqli_num_rows($result);
@@ -26,9 +26,10 @@
 				}while ($res = mysqli_fetch_assoc($result));
 				header('location: index.php?page=home');
 		}else {
-			echo '<script language="javascript">';
-			echo 'alert("Dados Incorretos!")';
-			echo '</script>';
+			$alerta = "<a style= color:red;display:-webkit-box;text-align:-webkit-center;margin:5px;>Dados Incoretos</a>";
+		}
+		if($res['activo'] == 0) {
+
 		}
 	}
 	/*Login*/
@@ -38,12 +39,13 @@
 				$username = mysqli_real_escape_string($bd, $_POST['username']);
 				$email = mysqli_real_escape_string($bd, $_POST['email_register']);
 				$password = mysqli_real_escape_string($bd, $_POST['password']);
+
 					$sql = "SELECT * FROM utilizadores WHERE email = '$email'";
 					$query = mysqli_query($bd, $sql);
 					$cont = mysqli_num_rows($query);
 					if($cont > 0) {
 							$_SESSION['ver_email'] = "Email ja existente";
-						
+
 						}else{
 						$foto = "default.png";
 						$foto_capa = "default_capa.jpg";
@@ -59,7 +61,7 @@
 						$res = mysqli_fetch_assoc($query);
 						$_SESSION['id_utilizador'] = $res['id_utilizador'];
 						$_SESSION['password'] = $res['password'];
-						header('location: index.php?page=home');	
+						header('location: index.php?page=home');
 }
 }
 	/* Registro*/
@@ -68,8 +70,8 @@
 	/*Terminar Sessão*/
 		if(isset($_GET['logout'])) {
 			$_SESSION['username'] = '';
-			session_destroy();	
-			header('Location: index.php');		
+			session_destroy();
+			header('Location: index.php');
 	}
 	/*Terminar Sessão*/
 
@@ -93,4 +95,4 @@
 		header('location: ../index.php?page=home');
 	/*Criar Topico*/
 	}
-?>	
+?>

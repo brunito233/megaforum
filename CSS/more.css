@@ -304,7 +304,7 @@ p {
   z-index: 1; /* Sit on top */
   padding-top: 100px; /* Location of the box */
   left: 0;
-  top: 0;
+  top: -50px;
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
@@ -318,7 +318,7 @@ p {
   padding: 20px;
   border: 1px solid #888;
   width: 60%;
-  height: 63%;
+  height: 75%;
 }
 
 .close-edit {
@@ -369,10 +369,82 @@ p {
 .btn_eliminar_topico {
   padding: 15px 20px;
   float: right;
-  margin-top: 10px;
+  margin-top: 8px;
   background: #d82e2e;
   border: none;
   color: white;
   border-radius: 5px;
   cursor: pointer;
+}
+
+#id_confrmdiv
+{
+    display: none;
+    background-color: #eee;
+    border-radius: 5px;
+    border: 1px solid #aaa;
+    position: fixed;
+    width: 300px;
+    left: 50%;
+    margin-left: -150px;
+    padding: 6px 8px 8px;
+    box-sizing: border-box;
+    text-align: center;
+    top: 25%;
+}
+#id_confrmdiv button {
+    background-color: #ccc;
+    display: inline-block;
+    border-radius: 3px;
+    border: 1px solid #aaa;
+    padding: 2px;
+    text-align: center;
+    width: 80px;
+    cursor: pointer;
+}
+#id_confrmdiv .button:hover
+{
+    background-color: #ddd;
+}
+#confirmBox .message
+{
+    text-align: left;
+    margin-bottom: 8px;
+}
+
+.btn_editar_titulo {
+  padding: 10px 20px;
+  position: relative;
+  top: -10px;
+  background: transparent;
+  border: none;
+  background-color: #535a6c;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn_editar_assunto {
+  padding: 15px 20px;
+  position: relative;
+  top: 15px;
+  border-radius: 5px;
+  background: transparent;
+  border: none;
+  background-color: #535a6c;
+  color: white;
+  cursor: pointer;
+}
+
+.btn_lock {
+    font-size: 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: grey;
+    outline: none;
+}
+
+.btn_lock:hover {
+  color: #323a35;
 }

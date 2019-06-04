@@ -22,16 +22,13 @@
 
   </head>
   <?php
-
    $url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
    $id = substr($url, strrpos($url, '=') + 1);
    $_SESSION['id_topico'] = $id; //Id do Topico;
-
    $sql_topico = "SELECT * FROM topicos WHERE id_topico = '$id'";
    $query_topico = mysqli_query($bd, $sql_topico);
    $res_topico = mysqli_fetch_assoc($query_topico);
    $id_ut_login = $_SESSION['id_utilizador'];
-
    do {
      //A variavel $id_titulo vai tomar o valor do id titulo da Tabelas Topicos
      $id_titulo = $res_topico['id_titulo'];//ID do Titulo do Topico
@@ -40,8 +37,6 @@
      $query_titulo = mysqli_query($bd, $sql_titulo);
      $res_titulo = mysqli_fetch_assoc($query_titulo);
      $titulo = $res_titulo['titulo'];
-
-
      //Variavel id_utilizador toma o valor do id do utilizador da Tabela Topicos
      $id_utilizador = $res_topico['id_utilizador']; //ID do Utilizador do Topico
      //Com o ID do utilizador vai a tabela Utilizadores buscar os dados do Utilizador
@@ -56,7 +51,6 @@
       }else {
         $rank = "Utilizador";
       }
-
       //Variavel id_categoria toma o valor do id da categoria da Tabela Topicos
       $id_categoria = $res_topico['id_categoria'];
       //Com o ID da categoria vai a Tabela categoria buscar os dados da Categoria
@@ -64,6 +58,7 @@
       $query_categoria = mysqli_query($bd, $sql_categoria);
       $res_categoria = mysqli_fetch_assoc($query_categoria);
       $categoria = $res_categoria['categoria']; //Categoria do Topico
+      $GLOBALS["categoria"] = $categoria;
 
       //Variavel id_assunto toma o valor do id assunto da Tabela Topicos
       $id_assunto = $res_topico['id_assunto'];
@@ -72,7 +67,6 @@
       $query_assunto = mysqli_query($bd, $sql_assunto);
       $res_assunto = mysqli_fetch_assoc($query_assunto);
       $assunto = $res_assunto['assunto']; //Assunto do Topico
-
       //Verifica se o utilizaodr que esta logado é Administrador
       $id_utilizador_logado = $_SESSION['id_utilizador'];
       $sql_adm = "SELECT * FROM utilizadores WHERE id_utilizador = '$id_utilizador_logado'";
@@ -150,82 +144,129 @@
                             <span class="close-edit" onclick="fechar();">&times;</span>
                             <h3>Editar Topico</h3><br>
                             <div class="editar-content">
+                              <form method="POST">
                               <!--Titulo-->
-                              <input name="titulo_editar" class="form-control" type="text" required="true" id="titulo" value='<?php echo $titulo;?>'>
+                              <input name="titulo_editar" class="form-control" type="text" required="true" id="titulo" value='<?php echo $res_titulo['titulo'];?>'>
 
-                              <select id="select" name="categoria" required="true">
-                                <option selected disabled hidden><?php echo $res_cat['categoria']; ?></option>
 
-                                <!--FORUM TECH-->
+                              <?php
 
-                                <optgroup label="Forum Tech">
-                                  <?php
-                                    $sql = "SELECT * FROM categoria WHERE type = '1'";
-                                    $query = mysqli_query($bd, $sql);
-                                    $res = mysqli_fetch_assoc($query);
-                                      do {
-                                  ?>
-                                <option value="<?php echo $res['id_categoria'];?>"><?php echo $res['categoria'];?></option>
-                                  <?php } while($res = mysqli_fetch_assoc($query));?>
-                                </optgroup>
+                              function mostrar_categoria(){
 
-                                <!--FORUM TECH-->
+                                $bd = mysqli_connect ('localhost','root', '' , 'pap2018');
+                                $sql = "SELECT * FROM categoria WHERE type = '1' order by categoria ASC";
+                                $query = mysqli_query($bd, $sql);
+                                $res = mysqli_fetch_assoc($query); ?>
+                                <optgroup  label="Mega Forum"><?php
+                                do {
+                                  ?><option><?php echo utf8_encode($res["categoria"]);?></option><?php
+                                }while($res = mysqli_fetch_assoc($query));
+                                ?></optgroup><?php
 
-                                <!--Desenvolvimento WEB-->
+                                $sql = "SELECT * FROM categoria WHERE type = '2' order by categoria ASC";
+                                $query = mysqli_query($bd, $sql);
+                                $res = mysqli_fetch_assoc($query);
+                                ?><optgroup  label="Desenvolvimento Web"><?php
+                                do {
+                                  ?><option><?php echo $res["categoria"];?></option><?php
+                                }while($res = mysqli_fetch_assoc($query));
+                                ?></optgroup><?php
 
-                                <optgroup label="Desenvolvimento Web">
-                                  <?php
-                                    $sql = "SELECT * FROM categoria WHERE type = '2'";
-                                    $query = mysqli_query($bd, $sql);
-                                    $res = mysqli_fetch_assoc($query);
-                                      do {
-                                  ?>
-                                <option value="<?php echo $res['id_categoria'];?>"><?php echo $res['categoria'];?></option>
-                                  <?php } while($res = mysqli_fetch_assoc($query));?>
-                                </optgroup>
+                                $sql = "SELECT * FROM categoria WHERE type = '3' order by categoria ASC";
+                                $query = mysqli_query($bd, $sql);
+                                $res = mysqli_fetch_assoc($query);
+                                ?><optgroup  label="Desenvolvimento Geral"><?php
+                                do {
+                                  ?><option><?php echo $res["categoria"];?></option><?php
+                                }while($res = mysqli_fetch_assoc($query));
+                                ?></optgroup><?php
 
-                                <!--Desenvolvimento WEB-->
+                                $sql = "SELECT * FROM categoria WHERE type = '4' order by categoria ASC";
+                                $query = mysqli_query($bd, $sql);
+                                $res = mysqli_fetch_assoc($query);
+                                ?><optgroup  label="Base de Dados"><?php
+                                do {
+                                  ?><option><?php echo $res["categoria"];?></option><?php
+                                }while($res = mysqli_fetch_assoc($query));
+                                ?></optgroup><?php
+                              }
+                              ?>
 
-                                <!--Desenvolvimento Geral-->
 
-                                <optgroup label="Desenvolvimento Geral">
-                                  <?php
-                                    $sql = "SELECT * FROM categoria WHERE type = '3'";
-                                    $query = mysqli_query($bd, $sql);
-                                    $res = mysqli_fetch_assoc($query);
-                                      do {
-                                  ?>
-                                <option value="<?php echo $res['id_categoria'];?>"><?php echo $res['categoria'];?></option>
-                                  <?php } while($res = mysqli_fetch_assoc($query));?>
-                                </optgroup>
+                              <select id="select" name="categoria_registada">
+                                <option selected  hidden><?php echo $GLOBALS["categoria"];?></option>
+                                <?php  echo mostrar_categoria();?>
+                              </select>
 
-                                <!--Desenvolvimento GERAL-->
 
-                                <!--Base de Dados-->
+                              <?php
+                              if(isset($_POST["btn_editar"])) {
+                                $novo_titulo = mysqli_real_escape_string($bd, $_POST["titulo_editar"]);
+                                $nova_categoria = mysqli_real_escape_string($bd, $_POST["categoria_registada"]);
+                                $novo_assunto = mysqli_real_escape_string($bd, $_POST["assunto_editar"]);
 
-                                <optgroup label="Base de Dados">
-                                  <?php
-                                    $sql = "SELECT * FROM categoria WHERE type = '4'";
-                                    $query = mysqli_query($bd, $sql);
-                                    $res = mysqli_fetch_assoc($query);
-                                    do {
-                                  ?>
-                                <option value="<?php echo $res['id_categoria'];?>"><?php echo $res['categoria'];?></option>
-                                  <?php } while($res = mysqli_fetch_assoc($query));?>
-                                </optgroup>
+                                //UPDATE TITULO
+                                $sql_novo_titulo = "UPDATE titulo SET titulo = '$novo_titulo' WHERE id_titulo = '$id_titulo'";
+                                $query_novo_titulo = mysqli_query($bd, $sql_novo_titulo);
 
-                                <!--Base de Dados-->
-                              </select><br>
+                                //UPDATE CATEGORIA
+
+                                $sql_categoria_procurar = "SELECT * FROM categoria WHERE categoria = '$nova_categoria'";
+                                $query = mysqli_query($bd, $sql_categoria_procurar);
+                                $res = mysqli_fetch_assoc($query);
+                                $id_categoria = $res["id_categoria"];
+                                $sql_nova_categoria = "UPDATE topicos SET id_categoria = '$id_categoria'";
+
+
+                                $query_nova_categoria = mysqli_query($bd, $sql_nova_categoria);
+
+                                //UPDATE ASSUNTO
+
+                                $sql_novo_assunto = "UPDATE assunto SET assunto = '$novo_assunto' WHERE id_assunto = '$id_assunto'";
+                                $query_novo_assunto = mysqli_query($bd, $sql_novo_assunto);
+
+                              }
+
+                              ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                               <!--Textarea-->
 
-                              <textarea id="mytextarea_1" name="assunto_editar" required="TRUE"></textarea>
+                              <textarea id="mytextarea_1" name="assunto_editar" required="TRUE"><?php echo $res_assunto['assunto']; ?></textarea>
 
                               <!--Textarea-->
 
                               <!--Botao Editar Topico-->
 
-                              <form method="POST">
                                 <button name="btn_editar" class="btn_editar">Editar Topico</button>
                               </form>
 
@@ -233,7 +274,6 @@
 
                               <!--Botão Eliminar Topico-->
 
-                              <form method="POST">
                                 <button name="btn_eliminar_topico" class="btn_eliminar_topico">Eliminar Topico</button>
                               </form>
 
@@ -267,9 +307,7 @@
       $query_resposta = mysqli_query($bd, $sql_resposta);
       $res_resposta = mysqli_fetch_assoc($query_resposta);
       $contagem_resposta = mysqli_num_rows($query_resposta);
-
       do {
-
         //A Variavel $id_utilizador vai tomar o valor do id do utilizador da tabela Respostas Selecionado
         $id_utilizador = $res_resposta['id_utilizador']; //ID do Utilizador das Respostas
         //Pega na Variavel que contem o id do utilizador da resposta e vai buscar os dados do Utilizador
@@ -284,12 +322,10 @@
           }else {
             $rank = "Utilizador";
           }
-
           if($contagem_resposta > 0 ) {
             $id_resposta = $res_resposta['id_respostas']; //ID da Resposta
             $resposta = $res_resposta['resposta']; //Resposta do Utilizador
             $data_resposta = $res_resposta['hora'];
-
     ?>
 
     <!--Respostas-->

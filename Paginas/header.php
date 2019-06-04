@@ -12,9 +12,9 @@
        <?php if(isset($_SESSION['username'])){?>
       <a href="Paginas/creattopic.php"><i class="fas fa-plus"></i></a>
       <a href="Paginas/definicoes.php?<?php echo $_SESSION['id_utilizador'];?>"><i class="fas fa-cog"></i></a>
-      <?php 
+      <?php
           $id_utilizador = $_SESSION['id_utilizador'];
-          $sql = "SELECT * FROM utilizadores WHERE id_utilizador = '$id_utilizador'"; 
+          $sql = "SELECT * FROM utilizadores WHERE id_utilizador = '$id_utilizador'";
           $query = mysqli_query($bd,$sql);
           $res = mysqli_fetch_assoc($query);
           if($res['type'] == 1){?>
@@ -22,7 +22,7 @@
         <?php }?>
       <a href="Paginas/perfil_user.php?<?php echo $_SESSION['id_utilizador'];?>"><?php echo utf8_encode($_SESSION['username']);?></a>
       <a href="index.php?logout=1"><i class="fas fa-sign-out-alt"></i></a>
-    <?php }else{?> 
+    <?php }else{?>
       <a href="index.php?page=register">Criar Conta</a>
       <span>/</span>
       <a href="#" id="myBtn">Iniciar Sessão</a>
@@ -40,7 +40,12 @@
           <form method="POST">
             <input type="text" name="email" id="email" placeholder="Email" class="form-control" onclick="remove()">
             <input type="password" name="pass" id="passe" placeholder="Palavra-Passe" class="form-control" onclick="remove()">
-            
+            <?php
+            error_reporting(0);
+            ini_set(“display_errors”, 0 );
+            echo $alerta;
+            echo $alerta_ban;
+            ?>
             <input type="submit" name="btn_login" value="Login" class="submit-btn" onclick="return(valida_form())">
           </form>
         </div>
@@ -80,7 +85,7 @@
     // Get the <span> element that closes the modal
     var span = document.getElementsByClassName("close")[0];
 
-    // When the user clicks the button, open the modal 
+    // When the user clicks the button, open the modal
     btn.onclick = function() {
       modal.style.display = "block";
     }
@@ -88,13 +93,6 @@
     // When the user clicks on <span> (x), close the modal
     span.onclick = function() {
       modal.style.display = "none";
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-      if (event.target == modal) {
-        modal.style.display = "none";
-      }
     }
     </script>
   </div>
