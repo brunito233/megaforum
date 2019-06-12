@@ -405,7 +405,7 @@
 
                 <!--Modal Repostas-->
 
-                <!-- The Modal -->
+                <!-- The modal -->
                   <div id="modal_respostas<?php echo $id_resposta;?>" class="modal-respostas">
 
                     <!-- Modal content -->
