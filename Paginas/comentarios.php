@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	date_default_timezone_set("Portugal");
-	$bd = mysqli_connect('localhost','root','','pap2018');
+	$bd = mysqli_connect ('localhost','root', '' , 'pap2018');
 	$comentario = $_POST['comentario'];
 	$id_utilizador = $_SESSION['id_utilizador'];
 	$id_topico = $_SESSION['id_topico'];

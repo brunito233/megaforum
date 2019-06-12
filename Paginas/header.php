@@ -40,12 +40,6 @@
           <form method="POST">
             <input type="text" name="email" id="email" placeholder="Email" class="form-control" onclick="remove()">
             <input type="password" name="pass" id="passe" placeholder="Palavra-Passe" class="form-control" onclick="remove()">
-            <?php
-            error_reporting(0);
-            ini_set(“display_errors”, 0 );
-            echo $alerta;
-            echo $alerta_ban;
-            ?>
             <input type="submit" name="btn_login" value="Login" class="submit-btn" onclick="return(valida_form())">
           </form>
         </div>

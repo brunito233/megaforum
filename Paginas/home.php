@@ -1,7 +1,7 @@
 <div class="bar_topicos">
-	<h4><i class="fas fa-file-alt"></i> Topicos </h4>	
+	<h4><i class="fas fa-file-alt"></i> Topicos </h4>
 </div>
-<?php 
+<?php
 			$bd = mysqli_connect('localhost', 'root', '', 'pap2018');
 			$sql = "SELECT * FROM topicos";
 			$query = mysqli_query($bd, $sql);
@@ -43,17 +43,15 @@
 				$sql_cat = "SELECT * FROM categoria WHERE id_categoria = '$id_categoria'";
 				$query_cat = mysqli_query($bd, $sql_cat);
 				$res_cat = mysqli_fetch_assoc($query_cat);
-				
+
 				/*Buscar nlikes*/
 				$result = mysqli_query($bd, "SELECT COUNT(id_like) AS id_like FROM likes
 				WHERE id_topico = '$id_topico'");
 				$row = mysqli_fetch_array($result);
 				$count_nlikes = $row['id_like'];
 				/*Buscar nlikes*/
+?>
 
-
-				if($res['mostrar'] == 0 ) {
-			?>
 			<div class="topicos_content">
 				<div class="topico_icon">
 					<i class="fa fa-comment"></i>
@@ -65,6 +63,8 @@
 				<div class="topico_stats">
 					<p><strong><?php echo $count_respostas;?></strong> <i class="fas fa-comment-dots"></i></p>
 					<p><strong><?php echo $count_nlikes; ?></strong> <i class="fas fa-thumbs-up"></i></p>
+				<!--	<p><?php if($res['mostrar'] == 1 ) { ?> <i class="fas fa-lock" style="position: relative; top: -8px;"></i></p>
+					<p id="openlock"><?php }else { ?> <i class="fas fa-lock-open" style="position: relative; top: -8px;"></i></p>-->
 				</div>
 			</div>
 		<?php

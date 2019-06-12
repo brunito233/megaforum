@@ -19,6 +19,7 @@
     <script src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=enjkmvqbvv5ad8ey4z76voi9xt79co2k7l20kiqs8isbgdh7"></script>
     <script> tinymce.init({ selector: '#mytextarea' }); </script>
     <script> tinymce.init({ selector: '#mytextarea_1' }); </script>
+    <script> tinymce.init({ selector: '#mytextarea_2' }); </script>
 
   </head>
   <?php
@@ -74,6 +75,7 @@
       $res_adm = mysqli_fetch_assoc($query_adm);
       $rank_utilizador = $res_adm['type']; //Pega o tipo de Utilizador Logado
   ?>
+  <script> tinymce.init({ selector: '#mytextarea_2' }); </script>
   <body>
 
     <!--Topico Header-->
@@ -146,7 +148,12 @@
                             <div class="editar-content">
                               <form method="POST">
                               <!--Titulo-->
-                              <input name="titulo_editar" class="form-control" type="text" required="true" id="titulo" value='<?php echo $res_titulo['titulo'];?>'>
+                              <?php
+                                $sql_titulo_procurar = "SELECT * FROM titulo";
+                                $query_procurar = mysqli_query($bd, $sql_titulo_procurar);
+                                $res_titulo_procurar = mysqli_fetch_assoc($query_procurar);
+                              ?>
+                              <input name="titulo_editar" class="form-control" type="text" required="true" id="titulo" value='<?php echo $titulo; ?>'>
 
 
                               <?php
@@ -206,8 +213,11 @@
                                 $novo_assunto = mysqli_real_escape_string($bd, $_POST["assunto_editar"]);
 
                                 //UPDATE TITULO
+
                                 $sql_novo_titulo = "UPDATE titulo SET titulo = '$novo_titulo' WHERE id_titulo = '$id_titulo'";
                                 $query_novo_titulo = mysqli_query($bd, $sql_novo_titulo);
+
+                                //UPDATE TITULO
 
                                 //UPDATE CATEGORIA
 
@@ -215,49 +225,22 @@
                                 $query = mysqli_query($bd, $sql_categoria_procurar);
                                 $res = mysqli_fetch_assoc($query);
                                 $id_categoria = $res["id_categoria"];
-                                $sql_nova_categoria = "UPDATE topicos SET id_categoria = '$id_categoria'";
-
-
+                                $sql_nova_categoria = "UPDATE topicos SET id_categoria = '$id_categoria' WHERE id_topico = '$id'";
                                 $query_nova_categoria = mysqli_query($bd, $sql_nova_categoria);
+
+                                //UPDATE UPDATE CATEGORIA
 
                                 //UPDATE ASSUNTO
 
                                 $sql_novo_assunto = "UPDATE assunto SET assunto = '$novo_assunto' WHERE id_assunto = '$id_assunto'";
                                 $query_novo_assunto = mysqli_query($bd, $sql_novo_assunto);
 
+                                //UPDATE ASSUNTO
+
+                                echo("<meta http-equiv='refresh' content='0'>");
                               }
 
                               ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                               <!--Textarea-->
 
@@ -274,7 +257,35 @@
 
                               <!--Botão Eliminar Topico-->
 
-                                <button name="btn_eliminar_topico" class="btn_eliminar_topico">Eliminar Topico</button>
+                                <button name="btn_eliminar_topico" class="btn_eliminar_topico" onclick="doSomething()">Eliminar Topico</button>
+                                  <div id="id_confrmdiv">
+                                    <p>Tem a certeza que quer eliminar o seu topico?</p>
+                                      <form method="POST">
+                                        <button id="id_truebtn" name="sim">Sim</button>
+                                        <button id="id_falsebtn">Não</button>
+                                      </form>
+                                  </div>
+                                <?php
+                                  if(isset($_POST['sim'])) {
+                                    $sql_delete_respostas = "DELETE FROM respostas WHERE id_topico = '$id'";
+                                    $query_delete = mysqli_query($bd, $sql_delete_respostas);
+                                    $sql_delete = "DELETE FROM topicos WHERE id_topico = '$id'";
+                                    $query_delete = mysqli_query($bd, $sql_delete);
+                                    $sql_delete_assunto = "DELETE FROM assunto WHERE id_assunto = '$id_assunto'";
+                                    $query_delete = mysqli_query($bd, $sql_delete_assunto);
+                                    $sql_delete_titulo = "DELETE FROM titulo WHERE id_titulo = '$id_titulo'";
+                                    $query_delete = mysqli_query($bd, $sql_delete_titulo);
+                                      echo '<script type="text/javascript">
+                                    window.location = "../index.php"
+                                    </script>';
+                                  }
+
+                                ?>
+                                <script>
+                                  function doSomething(){
+                                    document.getElementById('id_confrmdiv').style.display="block"; //this is the replace of this line
+                                  }
+                                </script>
                               </form>
 
                               <!--Botão Eliminar Topico-->
@@ -283,7 +294,6 @@
                           </div>
                       </div>
                       <script src="../JS/modal.js"></script>
-
                 <?php }else{} // Fechar o Botao Mostar o botao Editar se for Adm que tivir logado?>
                 <?php }else{} //Fechar o "Se estivar Logado Mostra o Botão do Like"?>
               </dl>
@@ -326,6 +336,13 @@
             $id_resposta = $res_resposta['id_respostas']; //ID da Resposta
             $resposta = $res_resposta['resposta']; //Resposta do Utilizador
             $data_resposta = $res_resposta['hora'];
+
+            /*Numero de Likes nas Respostas*/
+            $result = mysqli_query($bd, "SELECT COUNT(id_like_resposta) AS id_like_resposta FROM likes_respostas
+            WHERE id_resposta = '$id_resposta'");
+            $row = mysqli_fetch_array($result);
+            $count_nlikes = $row['id_like_resposta'];
+            /*Numero de Likes nas Respostas*/
     ?>
 
     <!--Respostas-->
@@ -342,12 +359,95 @@
                 </dt>
                 <dd class="profile-rank"><?php echo $rank; ?></dd>
                 <dd class="profile-joined"><strong>Joined:</strong><?php echo date('d-m-Y', strtotime($data_registo));?></dd>
+                <!---Botao do Like-->
+                  <form method="POST" class="forms">
+                    <button class="btn_like" name="like_btn" style="display: none;"><i class="fas fa-thumbs-up"></i></button>
+                  </form>
+
+                <?php
+                  $sql_like_resposta = "SELECT * FROM likes_respostas WHERE id_resposta = '$id_resposta' AND id_utilizador = '$id_ut_login'";
+                  $query_like_resposta = mysqli_query($bd, $sql_like_resposta);
+                  $cont_like_resposta = mysqli_num_rows($query_like_resposta);
+                  $res_like_resposta = mysqli_fetch_assoc($query_like_resposta);
+                  $id_like_resposta = $res_like_resposta['id_like_resposta'];
+                    if($cont_like_resposta > 0) {
+                ?>
+
+                <form method="POST" class="forms">
+								    <button name="btn_remove_like_<?php echo $id_like_resposta;?>" class="btn_like_1"><i class="fas fa-thumbs-up"></i></button>
+                </form>
+                <?php echo $count_nlikes; ?>
+                <?php
+										if(isset($_POST['btn_remove_like_'.$id_like_resposta])) {
+                      $sql_remove_like = "DELETE FROM likes_respostas WHERE id_like_resposta = '$id_like_resposta'";
+										  $query_remove_like = mysqli_query($bd, $sql_remove_like);
+											echo("<meta http-equiv='refresh' content='0'>");
+									  }
+											}else{
+                ?>
+
+								<form method="POST" class="forms">
+								    <button name="btn_like_resposta_<?php echo $id_resposta;?>" class="btn_like"><i class="fas fa-thumbs-up"></i></button>
+                </form>
+							   <?php
+								     if(isset($_POST['btn_like_resposta_'.$id_resposta])) {
+										   $sql_like = "INSERT INTO likes_respostas (id_resposta,id_utilizador) VALUES ('$id_resposta','$id_ut_login')";
+										   $query_like = mysqli_query($bd, $sql_like);
+										   echo ("<meta http-equiv='refresh' content='0'>");
+										 }
+										}
+								 ?>
+                <!---Botao do Like-->
+
+                <!--Botão Editar Resposta-->
+                  <button name="btn_editar_resposta" class="btn_editar_resposta" id="btn_modal_respostas<?php echo $id_resposta;?>"><i class="fas fa-edit"></i></button>
+                <!--Botão Editar Resposta-->
+
+                <!--Modal Repostas-->
+
+                <!-- The Modal -->
+                  <div id="modal_respostas<?php echo $id_resposta;?>" class="modal-respostas">
+
+                    <!-- Modal content -->
+                    <div class="modal-content-respostas">
+                      <span class="close-respostas" id="close<?php echo $id_resposta;?>" style="float: right;">&times;</span>
+                      <center><h3>Editar Resposta</h3></center>
+                      <br>
+                      <textarea id="mytextarea_2" name="resposta_nova"><?php echo utf8_decode($resposta); ?></textarea>
+                      <br>
+                      <button name="btn_update_resposta" class="btn_resposta">Editar Resposta</button>
+                    </div>
+
+                  </div>
+
+
+                  <script>
+                  // Get the modal
+
+                  // Get the button that opens the modal
+                  var btn_respostas = document.getElementById("btn_modal_respostas<?php echo $id_resposta;?>");
+
+                  // Get the <span> element that closes the modal
+
+                  var close = document.getElementById("close<?php echo $id_resposta;?>");
+
+                  // When the user clicks the button, open the modal
+                  btn_respostas.onclick = function() {
+                    document.getElementById("modal_respostas<?php echo $id_resposta;?>").style.display = "block";
+                  }
+                  close.onclick = function () {
+                      document.getElementById("modal_respostas<?php echo $id_resposta;?>").style.display = "none";
+                  }
+
+                </script>
+                <!--Modal Respostas-->
+
               </dl>
             </div>
             <div class="postbody">
               <div id="post_content_topico">
                 <p class="author"><span class="responsive-hide">by <strong><a href="../Paginas/perfil_user.php?<?php echo $id_utilizador; ?>"><?php echo $nome_utilizador; ?></a></strong> <i class="fa fa-angle-double-right"></i> <?php echo $data_resposta; ?></span></p>
-                <div class="content"><?php echo $resposta; ?></div>
+                <div class="content"><?php echo utf8_decode($resposta); ?></div>
               </div>
             </div>
           </li>
@@ -373,14 +473,22 @@
     				}
     </script>
 
-    <?php if(isset($_SESSION['username'])){ //Se estiver logado mostra a textarea e o botão ?>
+    <?php if(isset($_SESSION['username'])){ //Se estiver logado mostra a textarea e o botão
+        $sql = "SELECT * FROM topicos";
+        $query = mysqli_query($bd, $sql);
+        $res = mysqli_fetch_assoc($query);
+        $mostrar = $res['mostrar'];
+          if($mostrar == 1 ) {
+          }else{?>
+            <div class="respostas">
+        			<textarea id="mytextarea"></textarea>
+        			<button name="btn_comentar" class="btn_comentar" onclick="return comentarios(window.location.reload());">Comentar</button>
+        		</div>
 
-    <div class="respostas">
-			<textarea id="mytextarea"></textarea>
-			<button name="btn_comentar" class="btn_comentar" onclick="return comentarios(window.location.reload());">Comentar</button>
-		</div>
+          <?php } ?>
 
-    <?php } //Se não estiver logado não mostra ?>
+  <?php }  ?>
+
 
   </body>
 </html>
